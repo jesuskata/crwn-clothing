@@ -1,12 +1,21 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/interactive-supports-focus */
 // Dependencies
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 
 // Styles
 import './MenuItem.scss';
 
-export const MenuItem = ({ title, imageUrl, size }) => (
-  <div className={`${size} menu-item`}>
+const MenuItem = ({
+  title, imageUrl, size, history, linkUrl, match
+}) => (
+  <div
+    role="button"
+    className={`${size} menu-item`}
+    onClick={() => history.push(`${match.url}${linkUrl}`)}
+  >
     <div className="background-image" style={{ backgroundImage: `url(${imageUrl})` }} />
     <div className="content">
       <h1 className="title">{title.toUpperCase()}</h1>
@@ -18,5 +27,10 @@ export const MenuItem = ({ title, imageUrl, size }) => (
 MenuItem.propTypes = {
   title: PropTypes.string,
   imageUrl: PropTypes.string,
-  size: PropTypes.string
+  size: PropTypes.string,
+  history: PropTypes.objectOf(PropTypes.any),
+  match: PropTypes.objectOf(PropTypes.any),
+  linkUrl: PropTypes.string
 };
+
+export const MenuItemWithRouter = withRouter(MenuItem);
