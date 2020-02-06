@@ -8,6 +8,7 @@ import './App.css';
 // Components
 import { HomePage } from './pages/HomePage';
 import { ShopPage } from './pages/Shop';
+import { Header } from './components/Header';
 
 // const HatsPage = () => (
 //   <div>
@@ -17,9 +18,11 @@ import { ShopPage } from './pages/Shop';
 
 const App = () => (
   <div>
+    <Header />
     <Switch>
       <Route exact path="/" component={HomePage} />
       <Route path="/shop" component={ShopPage} />
+      <Route path="/contact" component={ShopPage} />
     </Switch>
   </div>
 );
