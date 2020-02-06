@@ -8,6 +8,7 @@ import './App.css';
 // Components
 import { HomePage } from './pages/HomePage';
 import { ShopPage } from './pages/Shop';
+import { SigninAndSignup } from './pages/SigninAndSignup';
 import { Header } from './components/Header';
 
 // const HatsPage = () => (
@@ -23,6 +24,7 @@ const App = () => (
       <Route exact path="/" component={HomePage} />
       <Route path="/shop" component={ShopPage} />
       <Route path="/contact" component={ShopPage} />
+      <Route path="/signin" component={SigninAndSignup} />
     </Switch>
   </div>
 );
