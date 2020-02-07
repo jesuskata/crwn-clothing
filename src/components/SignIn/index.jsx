@@ -2,6 +2,9 @@
 // Dependencies
 import React from 'react';
 
+// Components
+import { FormInput } from '../FormInput';
+
 // Styles
 import './styles.scss';
 
@@ -37,22 +40,22 @@ export class SignIn extends React.Component {
         <span>Sign in with you email and password</span>
 
         <form onSubmit={this.handleSubmit} action="">
-          <input
+          <FormInput
             name="email"
             type="email"
             value={email}
-            onChange={this.handleChange}
+            label="email"
+            handleChange={this.handleChange}
             required
           />
-          <label htmlFor="email">Email</label>
-          <input
+          <FormInput
             name="password"
             type="password"
             value={password}
-            onChange={this.handleChange}
+            label="password"
+            handleChange={this.handleChange}
             required
           />
-          <label htmlFor="password">Email</label>
 
           <input type="submit" value="Submit Form" />
         </form>
