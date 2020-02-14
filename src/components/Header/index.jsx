@@ -1,9 +1,8 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 // Dependencies
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 // Firebase
 import { auth } from '../../firebase/firebaseUtils';
@@ -14,7 +13,7 @@ import './styles.scss';
 // Assets
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 
-export const Header = ({ currentUser }) => (
+const Header = ({ currentUser }) => (
   <div className="header">
     <Link className="logo-container" to="/">
       <Logo className="logo" />
@@ -36,3 +35,9 @@ export const Header = ({ currentUser }) => (
 Header.propTypes = {
   currentUser: PropTypes.objectOf(PropTypes.any)
 };
+
+const mapStateToProps = state => ({ // NOTE! The state value is the rootReducer
+  currentUser: state.user.currentUser
+});
+
+export const HeaderConnected = connect(mapStateToProps)(Header);
