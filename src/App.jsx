@@ -1,7 +1,7 @@
 // Dependencies
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // Redux Actions
@@ -45,6 +45,7 @@ class App extends React.Component {
   }
 
   render() {
+    const { currentUser } = this.props;
     return (
       <div>
         <HeaderConnected />
@@ -52,7 +53,16 @@ class App extends React.Component {
           <Route exact path="/" component={HomePage} />
           <Route path="/shop" component={ShopPage} />
           <Route path="/contact" component={ShopPage} />
-          <Route path="/signin" component={SigninAndSignup} />
+          <Route
+            exact
+            path="/signin"
+            render={() => (currentUser
+              ? (
+                <Redirect to="/" />
+              ) : (
+                <SigninAndSignup />
+              ))}
+          />
         </Switch>
       </div>
     );
@@ -60,11 +70,16 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  setCurrentUser: PropTypes.func
+  setCurrentUser: PropTypes.func,
+  currentUser: PropTypes.objectOf(PropTypes.any)
 };
+
+const mapStateToProps = ({ user }) => ({ // Here we are destructuring the user reducer from state (rootReducer)
+  currentUser: user.currentUser
+});
 
 const mapDispatchToProps = dispatch => ({
   setCurrentUser: user => dispatch(setCurrentUserAction(user))
 });
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
