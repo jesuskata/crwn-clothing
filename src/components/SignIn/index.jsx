@@ -7,7 +7,7 @@ import { FormInput } from '../FormInput';
 import { CustomButton } from '../CustomButton';
 
 // Firebase Signin
-import { signInWithGoogle } from '../../firebase/firebaseUtils';
+import { auth, signInWithGoogle } from '../../firebase/firebaseUtils';
 
 // Styles
 import './styles.scss';
@@ -22,10 +22,17 @@ export class SignIn extends React.Component {
     };
   }
 
-  handleSubmit = event => {
+  handleSubmit = async event => {
     event.preventDefault();
 
-    this.setState({ email: '', password: '' });
+    const { email, password } = this.state;
+
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
+      this.setState({ email: '', password: '' });
+    } catch (err) {
+      alert(err.message); // eslint-disable-line
+    }
   }
 
   handleChange = event => {
