@@ -44,7 +44,6 @@ class App extends React.Component {
               ...snapShot.data()
             }
           });
-          console.log('state: ', this.state); // eslint-disable-line
         });
       }
       this.setState({ currentUser: userAuth });
