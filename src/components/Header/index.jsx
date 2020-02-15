@@ -7,13 +7,17 @@ import { connect } from 'react-redux';
 // Firebase
 import { auth } from '../../firebase/firebaseUtils';
 
+// Components
+import { CartIconConnected } from '../CartIcon';
+import { CartDropdown } from '../CartDropdown';
+
 // Styles
 import './styles.scss';
 
 // Assets
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 
-const Header = ({ currentUser }) => (
+const Header = ({ currentUser, hidden }) => (
   <div className="header">
     <Link className="logo-container" to="/">
       <Logo className="logo" />
@@ -28,16 +32,31 @@ const Header = ({ currentUser }) => (
           <Link className="option" to="/signin">SIGN IN</Link>
         )
       }
+      <CartIconConnected />
     </div>
+    {hidden ? (
+      null
+    ) : (
+      <CartDropdown hidden={hidden} />
+    )}
   </div>
 );
 
 Header.propTypes = {
-  currentUser: PropTypes.objectOf(PropTypes.any)
+  currentUser: PropTypes.objectOf(PropTypes.any),
+  hidden: PropTypes.bool
 };
 
 const mapStateToProps = state => ({ // NOTE! The state value is the rootReducer
-  currentUser: state.user.currentUser
+  currentUser: state.user.currentUser,
+  hidden: state.cart.hidden
 });
+
+// This is another way to do the same from above
+// eslint-disable-next-line max-len
+// const mapStateToProps = ({ user: { currentUser }, cart: { hidden } }) => ({ // NOTE! The state value is the rootReducer
+//   currentUser,
+//   hidden
+// });
 
 export const HeaderConnected = connect(mapStateToProps)(Header);
