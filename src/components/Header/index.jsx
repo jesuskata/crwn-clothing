@@ -9,7 +9,7 @@ import { auth } from '../../firebase/firebaseUtils';
 
 // Components
 import { CartIconConnected } from '../CartIcon';
-import { CartDropdown } from '../CartDropdown';
+import { CartDropdownConnected } from '../CartDropdown';
 
 // Styles
 import './styles.scss';
@@ -37,7 +37,7 @@ const Header = ({ currentUser, hidden }) => (
     {hidden ? (
       null
     ) : (
-      <CartDropdown hidden={hidden} />
+      <CartDropdownConnected hidden={hidden} />
     )}
   </div>
 );
