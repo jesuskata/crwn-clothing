@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
 // Firebase
 import { auth } from '../../firebase/firebaseUtils';
@@ -10,6 +11,10 @@ import { auth } from '../../firebase/firebaseUtils';
 // Components
 import { CartIconConnected } from '../CartIcon';
 import { CartDropdownConnected } from '../CartDropdown';
+
+// Redux
+import { selectCartHidden } from '../../store/selectors/cart';
+import { selectCurrentUser } from '../../store/selectors/user';
 
 // Styles
 import './styles.scss';
@@ -47,9 +52,9 @@ Header.propTypes = {
   hidden: PropTypes.bool
 };
 
-const mapStateToProps = state => ({ // NOTE! The state value is the rootReducer
-  currentUser: state.user.currentUser,
-  hidden: state.cart.hidden
+const mapStateToProps = createStructuredSelector({ // NOTE! The state value is the rootReducer
+  currentUser: selectCurrentUser,
+  hidden: selectCartHidden
 });
 
 // This is another way to do the same from above

@@ -3,9 +3,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
-// Redux Actions
+// Redux
 import { setCurrentUser as setCurrentUserAction } from './store/actions/userActions';
+import { selectCurrentUser } from './store/selectors/user';
 
 // Styles
 import './App.css';
@@ -74,8 +76,8 @@ App.propTypes = {
   currentUser: PropTypes.objectOf(PropTypes.any)
 };
 
-const mapStateToProps = ({ user }) => ({ // Here we are destructuring the user reducer from state (rootReducer)
-  currentUser: user.currentUser
+const mapStateToProps = createStructuredSelector({ // We are destructuring the user reducer from state (rootReducer)
+  currentUser: selectCurrentUser
 });
 
 const mapDispatchToProps = dispatch => ({
