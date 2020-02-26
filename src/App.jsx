@@ -3,9 +3,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
-// Redux Actions
+// Redux
 import { setCurrentUser as setCurrentUserAction } from './store/actions/userActions';
+import { selectCurrentUser } from './store/selectors/user';
 
 // Styles
 import './App.css';
@@ -13,6 +15,7 @@ import './App.css';
 // Components
 import { HomePage } from './pages/HomePage';
 import { ShopPage } from './pages/Shop';
+import { Checkout } from './pages/Checkout';
 import { SigninAndSignup } from './pages/SigninAndSignup';
 import { HeaderConnected } from './components/Header';
 
@@ -53,6 +56,7 @@ class App extends React.Component {
           <Route exact path="/" component={HomePage} />
           <Route path="/shop" component={ShopPage} />
           <Route path="/contact" component={ShopPage} />
+          <Route path="/checkout" component={Checkout} />
           <Route
             exact
             path="/signin"
@@ -74,8 +78,8 @@ App.propTypes = {
   currentUser: PropTypes.objectOf(PropTypes.any)
 };
 
-const mapStateToProps = ({ user }) => ({ // Here we are destructuring the user reducer from state (rootReducer)
-  currentUser: user.currentUser
+const mapStateToProps = createStructuredSelector({ // We are destructuring the user reducer from state (rootReducer)
+  currentUser: selectCurrentUser
 });
 
 const mapDispatchToProps = dispatch => ({
