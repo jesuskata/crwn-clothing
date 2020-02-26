@@ -5,6 +5,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
+// Component
+import { CheckoutItem } from '../../components/CheckoutItem';
+
 // Redux
 import { selectCartItems, selectCartTotal } from '../../store/selectors/cart';
 
@@ -31,7 +34,9 @@ const CheckoutComponent = ({ cartItems, total }) => (
       </div>
     </div>
     {
-      cartItems.map(cartItem => cartItem.name)
+      cartItems.map(cartItem => (
+        <CheckoutItem key={cartItem.id} cartItem={cartItem} />
+      ))
     }
     <div className="total">
       <span>
