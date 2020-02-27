@@ -1,33 +1,11 @@
 // Dependencies
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-
-// Redux
-import { selectCollections } from '../../store/selectors/shop';
 
 // Components
-import { CollectionPreview } from '../../components/CollectionPreview';
+import { CollectionOverview } from '../../components/CollectionsOverview';
 
-const ShopPageFn = ({ collections }) => (
+export const ShopPage = () => (
   <div className="shop-page">
-    {
-      collections.map(({
-        id, title, routeName, items
-      }) => (
-        <CollectionPreview key={id} title={title} routeName={routeName} items={items} />
-      ))
-    }
+    <CollectionOverview />
   </div>
 );
-
-ShopPageFn.propTypes = {
-  collections: PropTypes.arrayOf(PropTypes.object)
-};
-
-const mapStateToProps = createStructuredSelector({
-  collections: selectCollections
-});
-
-export const ShopPage = connect(mapStateToProps)(ShopPageFn);
