@@ -31,9 +31,9 @@
     },
     "husky": {
         "hooks": {
-            "post-merge": "npm install",
-            "post-rewrite": "npm install",
-            "pre-commit": "npm run lint"
+            "post-merge": "yarn",
+            "post-rewrite": "yarn",
+            "pre-commit": "yarn lint"
         }
     },
     "eslintConfig": {
