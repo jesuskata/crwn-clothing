@@ -1,5 +1,10 @@
 // Dependencies
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+// Redux
+import { selectCollection } from '../../store/selectors/shop';
 
 // Components
 import { CollectionItemConnected } from '../../components/CollectionItem'; // eslint-disable-line
@@ -7,11 +12,20 @@ import { CollectionItemConnected } from '../../components/CollectionItem'; // es
 // Styles
 import './styles.scss';
 
-export const CollectionPage = ({ match }) => { // eslint-disable-line
-  console.log('collection match: ', match); // eslint-disable-line
-  return (
-    <div className="collection">
-      <h2>CATEGORY PAGE</h2>
-    </div>
-  );
+export const CollectionPageFn = ({ collection }) => (
+  <div className="collection">
+    <h2>
+      {`${collection.title.toUpperCase()} PAGE`}
+    </h2>
+  </div>
+);
+
+CollectionPageFn.propTypes = {
+  collection: PropTypes.objectOf(PropTypes.any)
 };
+
+const mapStateToProps = (state, ownProps) => ({
+  collection: selectCollection(ownProps.match.params.collectionId)(state)
+});
+
+export const CollectionPage = connect(mapStateToProps)(CollectionPageFn);
