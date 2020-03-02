@@ -7,18 +7,28 @@ import { connect } from 'react-redux';
 import { selectCollection } from '../../store/selectors/shop';
 
 // Components
-import { CollectionItemConnected } from '../../components/CollectionItem'; // eslint-disable-line
+import { CollectionItem } from '../../components/CollectionItem'; // eslint-disable-line
 
 // Styles
 import './styles.scss';
 
-export const CollectionPageFn = ({ collection }) => (
-  <div className="collection">
-    <h2>
-      {`${collection.title.toUpperCase()} PAGE`}
-    </h2>
-  </div>
-);
+export const CollectionPageFn = ({ collection }) => {
+  const { title, items } = collection;
+  return (
+    <div className="collection-page">
+      <h2 className="title">
+        {`${title.toUpperCase()} PAGE`}
+      </h2>
+      <div className="items">
+        {
+          items.map(item => (
+            <CollectionItem key={item.id} item={item} />
+          ))
+        }
+      </div>
+    </div>
+  );
+};
 
 CollectionPageFn.propTypes = {
   collection: PropTypes.objectOf(PropTypes.any)

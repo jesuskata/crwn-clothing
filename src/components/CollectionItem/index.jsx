@@ -12,7 +12,7 @@ import { addItem as addItemAction } from '../../store/actions/cartActions';
 // Styles
 import './styles.scss';
 
-const CollectionItem = ({
+const CollectionItemFn = ({
   item, addItem
 }) => {
   const { imageUrl, name, price } = item;
@@ -33,7 +33,7 @@ const CollectionItem = ({
   );
 };
 
-CollectionItem.propTypes = {
+CollectionItemFn.propTypes = {
   item: PropTypes.objectOf(PropTypes.any),
   addItem: PropTypes.func
 };
@@ -42,4 +42,4 @@ const mapDispatchToProps = dispatch => ({
   addItem: item => dispatch(addItemAction(item))
 });
 
-export const CollectionItemConnected = connect(null, mapDispatchToProps)(CollectionItem);
+export const CollectionItem = connect(null, mapDispatchToProps)(CollectionItemFn);
