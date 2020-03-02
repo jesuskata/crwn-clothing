@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // Components
-import { CollectionItemConnected } from '../CollectionItem';
+import { CollectionItem } from '../CollectionItem';
 
 // Styles
 import './styles.scss';
@@ -16,7 +16,7 @@ export const CollectionPreview = ({ title, items }) => (
         items
           .filter((item, idx) => idx < 4)
           .map(item => (
-            <CollectionItemConnected key={item.id} item={item} />
+            <CollectionItem key={item.id} item={item} />
           ))
       }
     </div>
