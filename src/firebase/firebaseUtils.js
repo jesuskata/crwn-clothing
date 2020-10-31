@@ -4,19 +4,30 @@ import 'firebase/firestore';
 import 'firebase/auth';
 
 // Runtime configuration
-import runtimeEnv from '@mars/heroku-js-runtime-env';
+// import runtimeEnv from '@mars/heroku-js-runtime-env';
 
-const env = runtimeEnv();
+// const env = runtimeEnv();
+
+// const config = {
+//   apiKey: env.REACT_APP_FB_API_KEY,
+//   authDomain: env.REACT_APP_FB_AUTH_DOMAIN,
+//   databaseURL: env.REACT_APP_FB_DBURL,
+//   projectId: env.REACT_APP_FB_PROJECT_ID,
+//   storageBucket: env.REACT_APP_FB_STORAGE_BUCKET,
+//   messagingSenderId: env.REACT_APP_FB_MESSAGING_SENDER,
+//   appId: env.REACT_APP_FB_APP_ID,
+//   measurementId: env.REACT_APP_FB_MEASUREMENT_ID
+// };
 
 const config = {
-  apiKey: env.REACT_APP_FB_API_KEY,
-  authDomain: env.REACT_APP_FB_AUTH_DOMAIN,
-  databaseURL: env.REACT_APP_FB_DBURL,
-  projectId: env.REACT_APP_FB_PROJECT_ID,
-  storageBucket: env.REACT_APP_FB_STORAGE_BUCKET,
-  messagingSenderId: env.REACT_APP_FB_MESSAGING_SENDER,
-  appId: env.REACT_APP_FB_APP_ID,
-  measurementId: env.REACT_APP_FB_MEASUREMENT_ID
+  apiKey: 'AIzaSyDFocrq7lknDQkNQ_OsEE5kKEVq6-hAQIs',
+  authDomain: 'crwn-db-c3aac.firebaseapp.com',
+  databaseURL: 'https://crwn-db-c3aac.firebaseio.com',
+  projectId: 'crwn-db-c3aac',
+  storageBucket: 'crwn-db-c3aac.appspot.com',
+  messagingSenderId: '453944246464',
+  appId: '1:453944246464:web:c0b54e1f1e8abb5ba32d25',
+  measurementId: 'G-643CT4RT8K'
 };
 
 export const createUserProfileDocument = async (userAuth, additionalData) => {
