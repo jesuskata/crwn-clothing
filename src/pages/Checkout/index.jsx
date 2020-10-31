@@ -13,24 +13,24 @@ import { StripeCheckoutButton } from '../../components/StripeButton';
 import { selectCartItems, selectCartTotal } from '../../store/selectors/cart';
 
 // Styles
-import './styles.scss';
+import styles from './styles.module.scss';
 
 const CheckoutComponent = ({ cartItems, total }) => (
-  <div className="checkout-page">
-    <div className="checkout-header">
-      <div className="header-block">
+  <div className={styles.checkoutPage}>
+    <div className={styles.checkoutHeader}>
+      <div className={styles.headerBlock}>
         <span>Product</span>
       </div>
-      <div className="header-block">
+      <div className={styles.headerBlock}>
         <span>Description</span>
       </div>
-      <div className="header-block">
+      <div className={styles.headerBlock}>
         <span>Quantity</span>
       </div>
-      <div className="header-block">
+      <div className={styles.headerBlock}>
         <span>Price</span>
       </div>
-      <div className="header-block">
+      <div className={styles.headerBlock}>
         <span>Remove</span>
       </div>
     </div>
@@ -39,12 +39,12 @@ const CheckoutComponent = ({ cartItems, total }) => (
         <CheckoutItem key={cartItem.id} cartItem={cartItem} />
       ))
     }
-    <div className="total">
+    <div className={styles.total}>
       <span>
         TOTAL: ${total}
       </span>
     </div>
-    <div className="test-warning">
+    <div className={styles.testWarning}>
       *Please use the following test credit card for payment
       <br />
       4242 4242 4242 4242 - Exp: Any future date - CVC: Any 3 digits

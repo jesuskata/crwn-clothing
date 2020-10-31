@@ -10,7 +10,7 @@ import { setCurrentUser as setCurrentUserAction } from './store/actions/userActi
 import { selectCurrentUser } from './store/selectors/user';
 
 // Styles
-import './App.css';
+import './App.module.css';
 
 // Components
 import { HomePage } from './pages/HomePage';
