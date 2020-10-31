@@ -3,15 +3,20 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 
+// Runtime configuration
+import runtimeEnv from '@mars/heroku-js-runtime-env';
+
+const env = runtimeEnv();
+
 const config = {
-  apiKey: process.env.REACT_APP_FB_API_KEY,
-  authDomain: process.env.REACT_APP_FB_AUTH_DOMAIN,
-  databaseURL: process.env.REACT_APP_FB_DBURL,
-  projectId: process.env.REACT_APP_FB_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_FB_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_FB_MESSAGING_SENDER,
-  appId: process.env.REACT_APP_FB_APP_ID,
-  measurementId: process.env.REACT_APP_FB_MEASUREMENT_ID
+  apiKey: env.REACT_APP_FB_API_KEY,
+  authDomain: env.REACT_APP_FB_AUTH_DOMAIN,
+  databaseURL: env.REACT_APP_FB_DBURL,
+  projectId: env.REACT_APP_FB_PROJECT_ID,
+  storageBucket: env.REACT_APP_FB_STORAGE_BUCKET,
+  messagingSenderId: env.REACT_APP_FB_MESSAGING_SENDER,
+  appId: env.REACT_APP_FB_APP_ID,
+  measurementId: env.REACT_APP_FB_MEASUREMENT_ID
 };
 
 export const createUserProfileDocument = async (userAuth, additionalData) => {
