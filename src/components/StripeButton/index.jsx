@@ -4,13 +4,14 @@ import PropTypes from 'prop-types';
 import StripeCheckout from 'react-stripe-checkout';
 
 // Runtime configuration
-import runtimeEnv from '@mars/heroku-js-runtime-env';
+// import runtimeEnv from '@mars/heroku-js-runtime-env';
 
-const env = runtimeEnv();
+// const env = runtimeEnv();
 
 export const StripeCheckoutButton = ({ price }) => {
   const priceForStripe = price * 100;
-  const publishableKey = env.REACT_APP_PUBLISHABLE_KEY;
+  // const publishableKey = env.REACT_APP_PUBLISHABLE_KEY;
+  const publishableKey = 'pk_test_gNAOEmYQAA6akX2TjW66uOZQ00Tg7rUswv';
 
   const onToken = token => {
     console.log('token: ', token); // eslint-disable-line
