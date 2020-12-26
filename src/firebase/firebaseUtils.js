@@ -69,6 +69,11 @@ export const convertCollectionsSnapshotToMap = (collections) => {
     };
   });
 
+  return transformCollection.reduce((accumulator, collection) => {
+    accumulator[collection.title.toLowerCase()] = collection;
+    return accumulator;
+  }, {});
+
   console.log('transformCollection: ', transformCollection); // eslint-disable-line
 };
 
