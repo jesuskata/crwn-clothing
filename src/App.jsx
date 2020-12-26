@@ -15,7 +15,7 @@ import './App.module.css';
 
 // Components
 import { HomePage } from './pages/HomePage';
-import { ShopPage } from './pages/Shop';
+import { ShopPageConnected } from './pages/Shop';
 import { Checkout } from './pages/Checkout';
 import { SigninAndSignup } from './pages/SigninAndSignup';
 import { HeaderConnected } from './components/Header';
@@ -58,8 +58,8 @@ class App extends React.Component {
         <HeaderConnected />
         <Switch>
           <Route exact path="/" component={HomePage} />
-          <Route path="/shop" component={ShopPage} />
-          <Route path="/contact" component={ShopPage} />
+          <Route path="/shop" component={ShopPageConnected} />
+          <Route path="/contact" component={ShopPageConnected} />
           <Route path="/checkout" component={Checkout} />
           <Route
             exact

@@ -2,21 +2,27 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 // Components
 import { CollectionOverview } from '../../components/CollectionsOverview';
 import { CollectionPage } from '../CollectionPage';
 
+// Redux Actions
+import { updateCollections as updateCollectionsAction } from '../../store/actions/shopActions';
+
 // Firebase
 import { firestore, convertCollectionsSnapshotToMap } from '../../firebase/firebaseUtils';
 
-export class ShopPage extends Component {
+class ShopPage extends Component {
   unsubscribeFromSnapshot = null;
 
   componentDidMount() {
+    const { updateCollections } = this.props;
     const collectionRef = firestore.collection('collections');
-    collectionRef.onSnapshot(async snapshot => {
-      convertCollectionsSnapshotToMap(snapshot);
+    this.unsubscribeFromSnapshot = collectionRef.onSnapshot(async snapshot => {
+      const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
+      updateCollections(collectionsMap);
     });
   }
 
@@ -32,5 +38,12 @@ export class ShopPage extends Component {
 }
 
 ShopPage.propTypes = {
-  match: PropTypes.objectOf(PropTypes.any)
+  match: PropTypes.objectOf(PropTypes.any),
+  updateCollections: PropTypes.func
 };
+
+const mapDispatchToProps = dispatch => ({
+  updateCollections: collectionsMap => dispatch(updateCollectionsAction(collectionsMap))
+});
+
+export const ShopPageConnected = connect(null, mapDispatchToProps)(ShopPage);
