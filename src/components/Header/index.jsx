@@ -16,7 +16,6 @@ import { selectCartHidden } from '../../store/selectors/cart';
 import { selectCurrentUser } from '../../store/selectors/user';
 
 // Styles
-// import './styles.scss';
 import {
   HeaderContainer,
   LogoContainer,
