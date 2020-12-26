@@ -8,3 +8,7 @@ export const cartActionTypes = {
   REMOVE_ITEM: 'REMOVE_ITEM',
   CLEAR_ITEM_FROM_CART: 'CLEAR_ITEM_FROM_CART'
 };
+
+export const shopActionTypes = {
+  UPDATE_COLLECTIONS: 'UPDATE_COLLECTIONS'
+};
