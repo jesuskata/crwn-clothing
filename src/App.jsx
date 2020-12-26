@@ -8,6 +8,7 @@ import { createStructuredSelector } from 'reselect';
 // Redux
 import { setCurrentUser as setCurrentUserAction } from './store/actions/userActions';
 import { selectCurrentUser } from './store/selectors/user';
+// import { selectCollectionsForPreview } from './store/selectors/shop';
 
 // Styles
 import './App.module.css';
@@ -20,14 +21,14 @@ import { SigninAndSignup } from './pages/SigninAndSignup';
 import { HeaderConnected } from './components/Header';
 
 // Firebase
-import { auth, createUserProfileDocument } from './firebase/firebaseUtils';
+import { auth, createUserProfileDocument/* , addCollectionAndDocuments */ } from './firebase/firebaseUtils';
 
 class App extends React.Component {
   // Unsubscribe
   unsubscribeFromAuth = null;
 
   componentDidMount() {
-    const { setCurrentUser } = this.props;
+    const { setCurrentUser/* , collectionsArray */ } = this.props;
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
@@ -40,6 +41,9 @@ class App extends React.Component {
         });
       }
       setCurrentUser(userAuth);
+      // addCollectionAndDocuments('collections', collectionsArray.map(({ title, items }) => (
+      //   { title, items }
+      // )));
     });
   }
 
@@ -75,11 +79,13 @@ class App extends React.Component {
 
 App.propTypes = {
   setCurrentUser: PropTypes.func,
-  currentUser: PropTypes.objectOf(PropTypes.any)
+  currentUser: PropTypes.objectOf(PropTypes.any),
+  // collectionsArray: PropTypes.arrayOf(PropTypes.any)
 };
 
 const mapStateToProps = createStructuredSelector({ // We are destructuring the user reducer from state (rootReducer)
-  currentUser: selectCurrentUser
+  currentUser: selectCurrentUser,
+  // collectionsArray: selectCollectionsForPreview
 });
 
 const mapDispatchToProps = dispatch => ({
