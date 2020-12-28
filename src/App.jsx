@@ -5,14 +5,8 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-// Redux Actions
-import {
-  setCurrentUser as setCurrentUserAction,
-} from './store/actions/userActions';
-
 // Redux Selectors
 import { selectCurrentUser } from './store/selectors/user';
-// import { selectCollectionsForPreview } from './store/selectors/shop';
 
 // Styles
 import './App.module.css';
@@ -24,16 +18,11 @@ import { Checkout } from './pages/Checkout';
 import { SigninAndSignup } from './pages/SigninAndSignup';
 import { HeaderConnected } from './components/Header';
 
-// Firebase
-// import { auth, createUserProfileDocument/* , addCollectionAndDocuments */ } from './firebase/firebaseUtils';
-
 class App extends React.Component {
   // Unsubscribe
   unsubscribeFromAuth = null;
 
   componentDidMount() {
-    // const { setCurrentUser/* , collectionsArray */ } = this.props;
-
     // this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
     //   if (userAuth) {
     //     const userRef = await createUserProfileDocument(userAuth);
@@ -83,18 +72,11 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  // setCurrentUser: PropTypes.func,
-  currentUser: PropTypes.objectOf(PropTypes.any),
-  // collectionsArray: PropTypes.arrayOf(PropTypes.any)
+  currentUser: PropTypes.objectOf(PropTypes.any)
 };
 
 const mapStateToProps = createStructuredSelector({ // We are destructuring the user reducer from state (rootReducer)
   currentUser: selectCurrentUser,
-  // collectionsArray: selectCollectionsForPreview
 });
 
-const mapDispatchToProps = dispatch => ({
-  setCurrentUser: user => dispatch(setCurrentUserAction(user))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);

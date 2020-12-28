@@ -8,11 +8,11 @@ import { connect } from 'react-redux';
 import { FormInput } from '../FormInput';
 import { CustomButton } from '../CustomButton';
 
-// Firebase Signin
-import { auth } from '../../firebase/firebaseUtils';
-
 // Redux Actions
-import { googleSignInStart as googleSignInStartAction } from '../../store/actions/userActions';
+import {
+  googleSignInStart as googleSignInStartAction,
+  emailSignInStart as emailSignInStartAction
+} from '../../store/actions/userActions';
 
 // Styles
 import './styles.scss';
@@ -29,15 +29,10 @@ class SignIn extends React.Component {
 
   handleSubmit = async event => {
     event.preventDefault();
+    const { emailSignInStart } = this.props;
 
     const { email, password } = this.state;
-
-    try {
-      await auth.signInWithEmailAndPassword(email, password);
-      this.setState({ email: '', password: '' });
-    } catch (err) {
-      alert(err.message); // eslint-disable-line
-    }
+    emailSignInStart(email, password);
   }
 
   handleChange = event => {
@@ -92,11 +87,13 @@ class SignIn extends React.Component {
 }
 
 SignIn.propTypes = {
-  googleSignInStart: PropTypes.func
+  googleSignInStart: PropTypes.func,
+  emailSignInStart: PropTypes.func
 };
 
 const mapDispatchToProps = dispatch => ({
-  googleSignInStart: () => dispatch(googleSignInStartAction())
+  googleSignInStart: () => dispatch(googleSignInStartAction()),
+  emailSignInStart: (email, password) => dispatch(emailSignInStartAction({ email, password }))
 });
 
 export const SignInConnected = connect(null, mapDispatchToProps)(SignIn);
