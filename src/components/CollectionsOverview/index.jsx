@@ -10,7 +10,7 @@ import { selectCollectionsForPreview } from '../../store/selectors/shop';
 // Components
 import { CollectionPreview } from '../CollectionPreview';
 
-const CollectionOverviewFn = ({ collections }) => (
+const CollectionsOverviewFn = ({ collections }) => (
   <div className="collections-overview">
     {
       collections.map(({
@@ -22,7 +22,7 @@ const CollectionOverviewFn = ({ collections }) => (
   </div>
 );
 
-CollectionOverviewFn.propTypes = {
+CollectionsOverviewFn.propTypes = {
   collections: PropTypes.arrayOf(PropTypes.object)
 };
 
@@ -30,4 +30,4 @@ const mapStateToProps = createStructuredSelector({
   collections: selectCollectionsForPreview
 });
 
-export const CollectionOverview = connect(mapStateToProps)(CollectionOverviewFn);
+export const CollectionsOverview = connect(mapStateToProps)(CollectionsOverviewFn);
