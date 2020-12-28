@@ -10,12 +10,12 @@ import { CollectionsOverviewContainer } from '../../containers/CollectionsOvervi
 import { CollectionPageContainer } from '../../containers/CollectionsPageContainer';
 
 // Redux Actions
-import { fetchCollectionsStartAsync as fetchCollectionsStartAsyncAction } from '../../store/actions/shopActions';
+import { fetchCollectionsStart as fetchCollectionsStartAction } from '../../store/actions/shopActions';
 
 class ShopPage extends Component {
   componentDidMount() {
-    const { fetchCollectionsStartAsync } = this.props;
-    fetchCollectionsStartAsync();
+    const { fetchCollectionsStart } = this.props;
+    fetchCollectionsStart();
     // fetch('https://firestore.googleapis.com/v1/projects/PROJECT_NAME/databases/(default)/documents/DOCUMENT_NAME')
     //   .then(response => response.json())
     //   .then(DOCUMENT_NAME => {
@@ -43,11 +43,11 @@ class ShopPage extends Component {
 
 ShopPage.propTypes = {
   match: PropTypes.objectOf(PropTypes.any),
-  fetchCollectionsStartAsync: PropTypes.func
+  fetchCollectionsStart: PropTypes.func
 };
 
 const mapDispatchToProps = dispatch => ({
-  fetchCollectionsStartAsync: () => dispatch(fetchCollectionsStartAsyncAction())
+  fetchCollectionsStart: () => dispatch(fetchCollectionsStartAction())
 });
 
 export const ShopPageConnected = connect(null, mapDispatchToProps)(ShopPage);
