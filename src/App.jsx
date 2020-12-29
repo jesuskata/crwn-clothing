@@ -8,6 +8,9 @@ import { createStructuredSelector } from 'reselect';
 // Redux Selectors
 import { selectCurrentUser } from './store/selectors/user';
 
+// Redux Actions
+import { checkUserSession as checkUserSessionAction } from './store/actions/userActions';
+
 // Styles
 import './App.module.css';
 
@@ -23,22 +26,8 @@ class App extends React.Component {
   unsubscribeFromAuth = null;
 
   componentDidMount() {
-    // this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-    //   if (userAuth) {
-    //     const userRef = await createUserProfileDocument(userAuth);
-
-    //     userRef.onSnapshot(snapShot => {
-    //       setCurrentUser({
-    //         id: snapShot.id,
-    //         ...snapShot.data()
-    //       });
-    //     });
-    //   }
-    //   setCurrentUser(userAuth);
-    //   // addCollectionAndDocuments('collections', collectionsArray.map(({ title, items }) => (
-    //   //   { title, items }
-    //   // )));
-    // });
+    const { checkUserSession } = this.props;
+    checkUserSession();
   }
 
   componentWillUnmount() {
@@ -72,11 +61,16 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  currentUser: PropTypes.objectOf(PropTypes.any)
+  currentUser: PropTypes.objectOf(PropTypes.any),
+  checkUserSession: PropTypes.func
 };
 
 const mapStateToProps = createStructuredSelector({ // We are destructuring the user reducer from state (rootReducer)
   currentUser: selectCurrentUser,
 });
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = dispatch => ({
+  checkUserSession: () => dispatch(checkUserSessionAction())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
