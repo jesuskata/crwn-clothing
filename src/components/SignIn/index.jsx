@@ -1,18 +1,23 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 // Dependencies
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 // Components
 import { FormInput } from '../FormInput';
 import { CustomButton } from '../CustomButton';
 
-// Firebase Signin
-import { auth, signInWithGoogle } from '../../firebase/firebaseUtils';
+// Redux Actions
+import {
+  googleSignInStart as googleSignInStartAction,
+  emailSignInStart as emailSignInStartAction
+} from '../../store/actions/userActions';
 
 // Styles
 import './styles.scss';
 
-export class SignIn extends React.Component {
+class SignIn extends React.Component {
   constructor(props) {
     super(props);
 
@@ -24,15 +29,10 @@ export class SignIn extends React.Component {
 
   handleSubmit = async event => {
     event.preventDefault();
+    const { emailSignInStart } = this.props;
 
     const { email, password } = this.state;
-
-    try {
-      await auth.signInWithEmailAndPassword(email, password);
-      this.setState({ email: '', password: '' });
-    } catch (err) {
-      alert(err.message); // eslint-disable-line
-    }
+    emailSignInStart(email, password);
   }
 
   handleChange = event => {
@@ -44,6 +44,7 @@ export class SignIn extends React.Component {
   }
 
   render() {
+    const { googleSignInStart } = this.props;
     const { email, password } = this.state;
     return (
       <div className="sign-in">
@@ -71,7 +72,11 @@ export class SignIn extends React.Component {
             <CustomButton type="submit" value="Submit Form">
               Sign In
             </CustomButton>
-            <CustomButton onClick={signInWithGoogle} isGoogleSignIn>
+            <CustomButton
+              type="button"
+              onClick={googleSignInStart}
+              isGoogleSignIn
+            >
               Sign In with Google
             </CustomButton>
           </div>
@@ -80,3 +85,15 @@ export class SignIn extends React.Component {
     );
   }
 }
+
+SignIn.propTypes = {
+  googleSignInStart: PropTypes.func,
+  emailSignInStart: PropTypes.func
+};
+
+const mapDispatchToProps = dispatch => ({
+  googleSignInStart: () => dispatch(googleSignInStartAction()),
+  emailSignInStart: (email, password) => dispatch(emailSignInStartAction({ email, password }))
+});
+
+export const SignInConnected = connect(null, mapDispatchToProps)(SignIn);

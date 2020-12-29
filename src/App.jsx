@@ -5,10 +5,11 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-// Redux
-import { setCurrentUser as setCurrentUserAction } from './store/actions/userActions';
+// Redux Selectors
 import { selectCurrentUser } from './store/selectors/user';
-// import { selectCollectionsForPreview } from './store/selectors/shop';
+
+// Redux Actions
+import { checkUserSession as checkUserSessionAction } from './store/actions/userActions';
 
 // Styles
 import './App.module.css';
@@ -20,31 +21,13 @@ import { Checkout } from './pages/Checkout';
 import { SigninAndSignup } from './pages/SigninAndSignup';
 import { HeaderConnected } from './components/Header';
 
-// Firebase
-import { auth, createUserProfileDocument/* , addCollectionAndDocuments */ } from './firebase/firebaseUtils';
-
 class App extends React.Component {
   // Unsubscribe
   unsubscribeFromAuth = null;
 
   componentDidMount() {
-    const { setCurrentUser/* , collectionsArray */ } = this.props;
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-      if (userAuth) {
-        const userRef = await createUserProfileDocument(userAuth);
-
-        userRef.onSnapshot(snapShot => {
-          setCurrentUser({
-            id: snapShot.id,
-            ...snapShot.data()
-          });
-        });
-      }
-      setCurrentUser(userAuth);
-      // addCollectionAndDocuments('collections', collectionsArray.map(({ title, items }) => (
-      //   { title, items }
-      // )));
-    });
+    const { checkUserSession } = this.props;
+    checkUserSession();
   }
 
   componentWillUnmount() {
@@ -78,18 +61,16 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  setCurrentUser: PropTypes.func,
   currentUser: PropTypes.objectOf(PropTypes.any),
-  // collectionsArray: PropTypes.arrayOf(PropTypes.any)
+  checkUserSession: PropTypes.func
 };
 
 const mapStateToProps = createStructuredSelector({ // We are destructuring the user reducer from state (rootReducer)
   currentUser: selectCurrentUser,
-  // collectionsArray: selectCollectionsForPreview
 });
 
 const mapDispatchToProps = dispatch => ({
-  setCurrentUser: user => dispatch(setCurrentUserAction(user))
+  checkUserSession: () => dispatch(checkUserSessionAction())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

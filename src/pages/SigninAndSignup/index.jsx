@@ -2,15 +2,15 @@
 import React from 'react';
 
 // Components
-import { SignIn } from '../../components/SignIn';
-import { SignUp } from '../../components/SignUp';
+import { SignInConnected } from '../../components/SignIn';
+import { SignUpConnected } from '../../components/SignUp';
 
 // Styles
 import './styles.scss';
 
 export const SigninAndSignup = () => (
   <div className="sign-in-and-sign-up">
-    <SignIn />
-    <SignUp />
+    <SignInConnected />
+    <SignUpConnected />
   </div>
 );
