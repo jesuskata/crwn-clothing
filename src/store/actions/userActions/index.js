@@ -12,6 +12,22 @@ export const emailSignInStart = emailAndPassword => ({
   payload: emailAndPassword
 });
 
+// Sign Up Actions
+export const signUpStart = userCredentials => ({
+  type: userActionTypes.SIGN_UP_START,
+  payload: userCredentials
+});
+
+export const signUpSuccess = ({ user, additionalData }) => ({
+  type: userActionTypes.SIGN_UP_SUCCESS,
+  payload: { user, additionalData }
+});
+
+export const signUpFailure = error => ({
+  type: userActionTypes.SIGN_UP_FAILURE,
+  payload: error
+});
+
 // Common Actions
 export const signInSuccess = user => ({
   type: userActionTypes.SIGN_IN_SUCCESS,
