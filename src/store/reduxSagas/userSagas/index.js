@@ -1,6 +1,6 @@
 // Dependencies
 import {
-  takeLatest/* , put */, all, call, put
+  takeLatest, all, call, put
 } from 'redux-saga/effects';
 
 // Redux Actions Types
