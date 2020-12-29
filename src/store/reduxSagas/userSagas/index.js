@@ -9,7 +9,9 @@ import { userActionTypes } from '../../actionTypes';
 // Redux Actions
 import {
   signInSuccess,
-  signInFailure
+  signInFailure,
+  signOutSuccess,
+  signOutFailure
 } from '../../actions/userActions';
 
 // Firebase Utils
@@ -23,7 +25,7 @@ export function* getSnapshotFromUserAuth(userAuth) {
     const userSnapshot = yield userRef.get();
     yield put(signInSuccess({ id: userSnapshot.id, ...userSnapshot.data() }));
   } catch (error) {
-    yield put(signInFailure);
+    yield put(signInFailure(error));
   }
 }
 
@@ -32,7 +34,7 @@ export function* signInWithGoogle() {
     const { user } = yield auth.signInWithPopup(googleProvider);
     yield getSnapshotFromUserAuth(user);
   } catch (error) {
-    yield put(signInFailure);
+    yield put(signInFailure(error));
   }
 }
 
@@ -48,7 +50,7 @@ export function* signInWithEmail({ payload: { email, password } }) {
     const { user } = yield auth.signInWithEmailAndPassword(email, password);
     yield getSnapshotFromUserAuth(user);
   } catch (error) {
-    yield put(signInFailure);
+    yield put(signInFailure(error));
   }
 }
 
@@ -76,10 +78,27 @@ export function* onCheckUserSession() {
   );
 }
 
+export function* signOut() {
+  try {
+    yield auth.signOut();
+    yield put(signOutSuccess());
+  } catch (error) {
+    yield put(signOutFailure(error));
+  }
+}
+
+export function* onSignOutStart() {
+  yield takeLatest(
+    userActionTypes.SIGN_OUT_START,
+    signOut
+  );
+}
+
 export function* userSagas() {
   yield all([
     call(onGoogleSignInStart),
     call(onEmailSignInStart),
-    call(onCheckUserSession)
+    call(onCheckUserSession),
+    call(onSignOutStart)
   ]);
 }

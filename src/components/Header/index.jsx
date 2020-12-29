@@ -4,16 +4,16 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-// Firebase
-import { auth } from '../../firebase/firebaseUtils';
-
 // Components
 import { CartIconConnected } from '../CartIcon';
 import { CartDropdownConnected } from '../CartDropdown';
 
-// Redux
+// Redux Selectors
 import { selectCartHidden } from '../../store/selectors/cart';
 import { selectCurrentUser } from '../../store/selectors/user';
+
+// Redux Actions
+import { signOutStart as signOutStartAction } from '../../store/actions/userActions';
 
 // Styles
 import {
@@ -26,7 +26,7 @@ import {
 // Assets
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 
-const Header = ({ currentUser, hidden }) => (
+const Header = ({ currentUser, hidden, signOutStart }) => (
   <HeaderContainer>
     <LogoContainer to="/">
       <Logo className="logo" />
@@ -36,7 +36,7 @@ const Header = ({ currentUser, hidden }) => (
       <OptionLink to="/contact">CONTACT</OptionLink>
       {
         currentUser ? (
-          <OptionLink as="div" onClick={() => auth.signOut()} to="/">SIGN OUT</OptionLink>
+          <OptionLink as="div" onClick={signOutStart} to="/">SIGN OUT</OptionLink>
         ) : (
           <OptionLink to="/signin">SIGN IN</OptionLink>
         )
@@ -53,12 +53,17 @@ const Header = ({ currentUser, hidden }) => (
 
 Header.propTypes = {
   currentUser: PropTypes.objectOf(PropTypes.any),
-  hidden: PropTypes.bool
+  hidden: PropTypes.bool,
+  signOutStart: PropTypes.func
 };
 
 const mapStateToProps = createStructuredSelector({ // NOTE! The state value is the rootReducer
   currentUser: selectCurrentUser,
   hidden: selectCartHidden
+});
+
+const mapDispatchToProps = dispatch => ({
+  signOutStart: () => dispatch(signOutStartAction())
 });
 
 // This is another way to do the same from above
@@ -68,4 +73,4 @@ const mapStateToProps = createStructuredSelector({ // NOTE! The state value is t
 //   hidden
 // });
 
-export const HeaderConnected = connect(mapStateToProps)(Header);
+export const HeaderConnected = connect(mapStateToProps, mapDispatchToProps)(Header);
