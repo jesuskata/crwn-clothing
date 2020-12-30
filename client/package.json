@@ -3,6 +3,10 @@
     "version": "0.1.0",
     "private": true,
     "proxy": "http://localhost:5000",
+    "devDependencies": {
+        "eslint-config-airbnb": "^18.0.1",
+        "husky": "^4.2.1"
+    },
     "dependencies": {
         "@mars/heroku-js-runtime-env": "^3.0.2",
         "@testing-library/jest-dom": "^4.2.4",
@@ -31,5 +35,74 @@
         "test": "react-scripts test",
         "lint": "eslint --ext .jsx,.js src",
         "eject": "react-scripts eject"
+    },
+    "husky": {
+        "hooks": {
+            "post-merge": "yarn",
+            "post-rewrite": "yarn",
+            "pre-commit": "yarn lint"
+        }
+    },
+    "eslintConfig": {
+        "parser": "babel-eslint",
+        "env": {
+            "browser": true,
+            "es6": true
+        },
+        "extends": [
+            "airbnb"
+        ],
+        "globals": {
+            "Atomics": "readonly",
+            "SharedArrayBuffer": "readonly",
+            "document": "writable"
+        },
+        "parserOptions": {
+            "ecmaFeatures": {
+                "jsx": true
+            },
+            "ecmaVersion": 2018,
+            "sourceType": "module"
+        },
+        "plugins": [
+            "react"
+        ],
+        "rules": {
+            "no-nested-ternary": "off",
+            "arrow-parens": "off",
+            "comma-dangle": "off",
+            "function-paren-newline": "off",
+            "import/no-extraneous-dependencies": "off",
+            "import/prefer-default-export": "off",
+            "max-len": [
+                1,
+                120
+            ],
+            "no-param-reassign": "off",
+            "no-unused-vars": [
+                2,
+                {
+                    "args": "none"
+                }
+            ],
+            "no-use-before-define": "off",
+            "react/destructuring-assignment": "off",
+            "react/require-default-props": "off",
+            "react/jsx-filename-extension": "off",
+            "react/jsx-props-no-spreading": "off",
+            "class-methods-use-this": "off"
+        }
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
     }
 }
