@@ -2,20 +2,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import StripeCheckout from 'react-stripe-checkout';
-
-// Runtime configuration
-// import runtimeEnv from '@mars/heroku-js-runtime-env';
-
-// const env = runtimeEnv();
+import axios from 'axios';
 
 export const StripeCheckoutButton = ({ price }) => {
   const priceForStripe = price * 100;
-  // const publishableKey = env.REACT_APP_PUBLISHABLE_KEY;
   const publishableKey = 'pk_test_gNAOEmYQAA6akX2TjW66uOZQ00Tg7rUswv';
 
   const onToken = token => {
-    console.log('token: ', token); // eslint-disable-line
-    alert('Payment Successful!'); // eslint-disable-line
+    axios({
+      url: 'payment',
+      method: 'post',
+      data: {
+        amount: priceForStripe,
+        token
+      }
+    }).then(response => {
+      alert('Payment Successful!'); // eslint-disable-line
+    }).catch(error => {
+      console.log('Payment error: ', JSON.parse(error)); // eslint-disable-line
+      alert( // eslint-disable-line
+        'There was an issue with your payment. Please make sure you use the provided credit card'
+      );
+    });
   };
 
   return (
