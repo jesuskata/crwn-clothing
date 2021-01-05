@@ -18,6 +18,9 @@ import { GlobalStyle } from './globalStyles';
 import { HeaderConnected } from './components/Header';
 import { Spinner } from './components/Spinner';
 
+// Error Boundary
+import { ErrorBoundary } from './components/ErrorBoundary';
+
 // Lazy Components
 const HomePage = lazy(() => import('./pages/HomePage'));
 const ShopPageConnected = lazy(() => import('./pages/Shop'));
@@ -32,25 +35,27 @@ const App = ({ checkUserSession, currentUser }) => {
   return (
     <div>
       <GlobalStyle />
-      <Suspense fallback={<Spinner />}>
-        <HeaderConnected />
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route path="/shop" component={ShopPageConnected} />
-          <Route path="/contact" component={ShopPageConnected} />
-          <Route path="/checkout" component={Checkout} />
-          <Route
-            exact
-            path="/signin"
-            render={() => (currentUser
-              ? (
-                <Redirect to="/" />
-              ) : (
-                <SigninAndSignup />
-              ))}
-          />
-        </Switch>
-      </Suspense>
+      <HeaderConnected />
+      <ErrorBoundary>
+        <Suspense fallback={<Spinner />}>
+          <Switch>
+            <Route exact path="/" component={HomePage} />
+            <Route path="/shop" component={ShopPageConnected} />
+            <Route path="/contact" component={ShopPageConnected} />
+            <Route path="/checkout" component={Checkout} />
+            <Route
+              exact
+              path="/signin"
+              render={() => (currentUser
+                ? (
+                  <Redirect to="/" />
+                ) : (
+                  <SigninAndSignup />
+                ))}
+            />
+          </Switch>
+        </Suspense>
+      </ErrorBoundary>
     </div>
   );
 };
