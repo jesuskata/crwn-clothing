@@ -12,7 +12,7 @@ import { selectCurrentUser } from './store/selectors/user';
 import { checkUserSession as checkUserSessionAction } from './store/actions/userActions';
 
 // Styles
-import './App.module.css';
+import { GlobalStyle } from './globalStyles';
 
 // Components
 import { HomePage } from './pages/HomePage';
@@ -28,6 +28,7 @@ const App = ({ checkUserSession, currentUser }) => {
 
   return (
     <div>
+      <GlobalStyle />
       <HeaderConnected />
       <Switch>
         <Route exact path="/" component={HomePage} />
