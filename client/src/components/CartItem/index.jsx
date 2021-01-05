@@ -1,11 +1,11 @@
 // Dependencies
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
 // Styles
 import './styles.scss';
 
-export const CartItem = ({
+const CartItemFn = ({
   item: {
     imageUrl, price, name, quantity
   }
@@ -21,6 +21,8 @@ export const CartItem = ({
   </div>
 );
 
-CartItem.propTypes = {
+CartItemFn.propTypes = {
   item: PropTypes.objectOf(PropTypes.any),
 };
+
+export const CartItem = memo(CartItemFn);
